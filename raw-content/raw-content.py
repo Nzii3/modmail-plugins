@@ -43,7 +43,7 @@ class Raw(commands.Cog):
   @commands.command()
   @checks.has_permissions(PermissionLevel.OWNER)
   async def getdb(self, ctx):
-    result = await self.db.find_one({'_id': 'config'})
+    result = (await self.db.find_one({'_id': 'config'}))['test_content']
     await ctx.send(str(result))
 
 def setup(bot):
