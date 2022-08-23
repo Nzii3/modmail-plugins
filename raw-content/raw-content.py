@@ -13,7 +13,7 @@ class Hello(commands.Cog):
     except:
       return await ctx.send("That is not a valid message ID in this channel.")
     if len(message.embeds) == 0:
-      return await ctx.send("There is not content to make raw! (No embeds).")
+      return await ctx.send("There is no content to make raw! (No embeds).")
     await ctx.send(message.embeds[0].description)
 
 def setup(bot):
