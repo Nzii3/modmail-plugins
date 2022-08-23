@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from core import checks
+from core.models import PermissionLevel
 
 class Raw(commands.Cog):
   def __init__(self, bot):
