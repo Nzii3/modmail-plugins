@@ -14,3 +14,29 @@
 ?autodelete limit 100
 ```
 This will search through 100 messages (default) in every set channel and delete messages if they are by the member that left.
+
+---
+
+**2.** Set auto-delete channels. These channels will be searched through to find messages to delete when a member leaves. *This would most likely be your server's advertising channel(s).*
+
+> Make sure to replace `<prefix>` with your bot's prefix.
+```
+<prefix>autodelete add_channel <#channel>
+```
+**Example**
+```
+?autodelete add_channel #self-promotion
+```
+
+**2.1** To remove an auto-delete channel, use the following command
+> Make sure to replace `<prefix>` with your bot's prefix.
+```
+<prefix>autodelete remove_channel <#channel>
+```
+**Example**
+```
+?autodelete remove_channel #self-promotion
+```
+
+# Credits
+*Made with 💙 by [vNziie--#7777](https://nziie.is-a.dev)*
