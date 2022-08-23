@@ -9,7 +9,6 @@ class Raw(commands.Cog):
 
   @commands.group(help="Get raw content of an embed", invoke_without_command=True)
   @checks.has_permissions(PermissionLevel.SUPPORTER)
-  @checks.thread_only()
   async def raw(self, ctx, message_id):
     if not message_id.isnumeric():
       return await ctx.send("Please provide an integer ID for a message in this channel.")
@@ -23,7 +22,6 @@ class Raw(commands.Cog):
   
   @raw.command(name="codeblock", aliases=['cb'], description="Get raw content from an embed (in codeblock)")
   @checks.has_permissions(PermissionLevel.SUPPORTER)
-  @checks.thread_only()
   async def raw_codeblock(self, ctx, message_id):
     if not message_id.isnumeric():
       return await ctx.send("Please provide an integer ID for a message in this channel.")
