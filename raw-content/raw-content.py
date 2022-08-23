@@ -6,7 +6,6 @@ from core.models import PermissionLevel
 class Raw(commands.Cog):
   def __init__(self, bot):
       self.bot = bot
-      self.db = bot.api.get_plugin_partition(self)
 
   @commands.group(help="Get raw content of an embed", invoke_without_command=True)
   @checks.has_permissions(PermissionLevel.SUPPORTER)
@@ -33,18 +32,6 @@ class Raw(commands.Cog):
     if len(message.embeds) == 0:
       return await ctx.send("There is no content to make raw! (No embeds).")
     await ctx.send(f"```\n{message.embeds[0].description}\n```")
-
-  @commands.command()
-  @checks.has_permissions(PermissionLevel.OWNER)
-  async def testdb(self, ctx, *, content: str):
-    await self.db.find_one_and_update({'_id': 'config'}, {'$set': {'test_content': content}}, upsert=True)
-    await ctx.send(f"Successfully set `content` as:\n>>> {content}")
-  
-  @commands.command()
-  @checks.has_permissions(PermissionLevel.OWNER)
-  async def getdb(self, ctx):
-    result = (await self.db.find_one({'_id': 'config'}))['test_content']
-    await ctx.send(str(result))
 
 def setup(bot):
     bot.add_cog(Raw(bot))
