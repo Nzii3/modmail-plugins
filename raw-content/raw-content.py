@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from core import checks
 
-class Hello(commands.Cog):
+class Raw(commands.Cog):
   def __init__(self, bot):
       self.bot = bot
 
@@ -35,4 +35,4 @@ class Hello(commands.Cog):
     await ctx.send(f"```\n{message.embeds[0].description}\n```")
 
 def setup(bot):
-    bot.add_cog(Hello(bot))
+    bot.add_cog(Raw(bot))
