@@ -18,6 +18,8 @@ class Raw(commands.Cog):
       return await ctx.send("That is not a valid message ID in this channel.")
     if len(message.embeds) == 0:
       return await ctx.send("There is no content to make raw! (No embeds).")
+    if str(message.embeds[0].description) == "Embed.Empty":
+      return await ctx.send("There is no description in that embed!")
     await ctx.send(message.embeds[0].description)
   
   @raw.command(name="codeblock", aliases=['cb'], description="Get raw content from an embed (in codeblock)")
