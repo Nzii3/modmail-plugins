@@ -39,6 +39,12 @@ class Raw(commands.Cog):
   async def testdb(self, ctx, *, content: str):
     await self.db.find_one_and_update({'_id': 'config'}, {'$set': {'test_content': content}}, upsert=True)
     await ctx.send(f"Successfully set `content` as:\n>>> {content}")
+  
+  @commands.command()
+  @checks.has_permissions(PermissionLevel.OWNER)
+  async def getdb(self, ctx):
+    result = await self.db.find_one({'_id': 'config'})
+    await ctx.send(str(result))
 
 def setup(bot):
     bot.add_cog(Raw(bot))
