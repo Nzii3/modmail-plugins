@@ -32,5 +32,15 @@ class AutoDelete(commands.Cog):
     embed.set_footer(text="Auto-delete by vNziie--#7777")
     await ctx.send(embed=embed)
   
+  @autodelete.command(name="limit", help="Set the number of messages for the bot to search in each channel (less the better for bot latency)")
+  @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
+  async def autodelete_limit(self, ctx, number):
+    if not number.isnumeric():
+      return await ctx.send("Please send a valid integer (number)!")
+    if number > 500:
+      return await ctx.send("You can't provide a number above **500** to prevent Discord rate limits")
+    if number < 0:
+      return await ctx.send("You can't provide a negative number.")
+  
 def setup(bot):
   bot.add_cog(AutoDelete(bot))
