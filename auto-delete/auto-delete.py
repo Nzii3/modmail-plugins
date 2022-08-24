@@ -37,9 +37,9 @@ class AutoDelete(commands.Cog):
   async def autodelete_limit(self, ctx, number):
     if not number.isnumeric():
       return await ctx.send("Please send a valid integer (number)!")
-    if number > 500:
+    if int(number) > 500:
       return await ctx.send("You can't provide a number above **500** to prevent Discord rate limits")
-    if number < 0:
+    if int(number) < 0:
       return await ctx.send("You can't provide a negative number.")
   
 def setup(bot):
