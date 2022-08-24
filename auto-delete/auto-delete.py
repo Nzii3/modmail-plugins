@@ -42,5 +42,10 @@ class AutoDelete(commands.Cog):
     if int(number) < 0:
       return await ctx.send("You can't provide a negative number.")
   
+  @autodelete.command(name="add_channels", help="Add channels to the auto-delete channels")
+  @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
+  async def autodelete_add_channel(self, ctx, channels: commands.Greedy[discord.TextChannel]):
+    return
+  
 def setup(bot):
   bot.add_cog(AutoDelete(bot))
