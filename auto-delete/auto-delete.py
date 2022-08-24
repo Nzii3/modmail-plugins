@@ -16,7 +16,7 @@ class AutoDelete(commands.Cog):
     return config
     
   
-  @commands.group(name="autodelete", aliases=['autodel'], description="Manage auto delete")
+  @commands.group(name="autodelete", aliases=['autodel'], description="Manage auto delete", invoke_without_command=True)
   @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
   async def autodelete(self, ctx):
     config = await self.get_config()
