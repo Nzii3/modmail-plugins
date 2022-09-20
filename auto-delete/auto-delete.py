@@ -3,9 +3,6 @@ from core import checks
 from core.models import PermissionLevel
 from discord.ext import commands
 
-class TypeFlags(commands.FlagConverter, prefix="", delimiter=" "):
-  type: str = commands.flag(aliases=['t'], default=None)
-
 class AutoDelete(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
@@ -62,7 +59,7 @@ class AutoDelete(commands.Cog):
   
   @autodelete.command(name="channels", help="View or add/remove auto-delete channels")
   @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
-  async def autodelete_channels(self, ctx, channels: commands.Greedy[discord.TextChannel], *, flags: TypeFlags):
+  async def autodelete_channels(self, ctx, channels: commands.Greedy[discord.TextChannel]):
     return await ctx.send(embed=self.error('This command is still in development!'))
   
 def setup(bot):
