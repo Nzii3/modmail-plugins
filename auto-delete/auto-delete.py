@@ -7,7 +7,7 @@ class AutoDelete(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
     self.db = bot.plugin_db.get_partition(self)
-    self.version = "1.0.3b"
+    self.version = "1.0.4b"
 
   def success(self, message: str) -> discord.Embed:
     embed = discord.Embed(color=self.bot.main_color, description=message)
