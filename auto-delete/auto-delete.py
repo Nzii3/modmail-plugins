@@ -54,11 +54,14 @@ class AutoDelete(commands.Cog):
     embed.set_footer(text=f"v{self.version} • Auto-delete by vNziie--#7777")
     await ctx.send(embed=embed)
   
-  @autodelete.command(name="limit", aliases=['messages'], help="Set the number of messages for the bot to search in each channel (less the better for bot latency)")
+  @autodelete.command(name="limit", aliases=['messages'], help="Set the number of messages for the bot to search in each channel (less the better for bot latency)\n\n🚩 **Flags** 🚩\n>>> `?set <val>` - Sets the autodelete limit to `val`\n - *using no flags will show the autodelete limit*")
   @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
   async def autodelete_limit(self, ctx, *, flags: SetFlags):
     if flags.set == None:
-      embed = discord.Embed(color=self.bot.main_color, description="")
+      config = await self.get_config()
+      embed = discord.Embed(color=self.bot.main_color, description=f"**{config['delete_limit']}** message(s)", title="Auto-delete Limit")
+      embed.set_footer(text=f"Use '{ctx.prefix}help autodelete limit' for flag info")
+      return await ctx.send(embed=embed)
     number = flags.set
     if not number.isnumeric():
       return await ctx.send("Please send a valid integer (number)!")
@@ -69,10 +72,45 @@ class AutoDelete(commands.Cog):
     await self.update_config(key="limit", data=number)
     await ctx.send(embed=self.success('Successfully set the message'))
   
-  @autodelete.command(name="channels", help="View or add/remove auto-delete channels")
+  @autodelete.command(name="channels", help="View or add/remove auto-delete channels\n\n🚩 **Flags** 🚩\n\n>>> `?type <add|remove>` - Putting type as `add` will add `channels` and using `remove` will remove `channels`")
   @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
   async def autodelete_channels(self, ctx, channels: commands.Greedy[discord.TextChannel], *, flags: TypeFlags):
-    return await ctx.send(embed=self.error('This command is still in development!'))
+    if flags.type == None or flags.type.lower() not in ['add', 'remove', 'delete', 'del']:
+      config = await self.get_config()
+      embed = discord.Embed(color=self.bot.main_color, title="Auto-delete Channels", description="\n".join(f"<#{c}>" for c in config['channels']))
+      embed.set_footer(text=f"Use '{ctx.prefix}help autodelete channels' for flag info")
+      return await ctx.send(embed=embed)
+    config = await self.get_config()
+    channels = config['channels']
+    TYPE = flags.type
+    if TYPE.lower() == 'add':
+      complete = []
+      errored = []
+      for channel in channels:
+        if channel.id in channels:
+          errored.append({'channel': channel, 'error': 'Channel is already added'})
+        channels.append(channel.id)
+        complete.append({'channel': channel})
+      EMBED = discord.Embed(color=discord.Colour.brand_green(), description="\n".join(f"> {self.bot.sent_emoji} {r['channel'].mention}" for r in complete), title=f"{self.bot.sent_emoji} Successfully added channels")
+      if errored != []:
+        EMBED.add_field(name="Failed", value="\n".join(f"{r['channel'].mention} - {r['error']}" for r in errored))
+      return await ctx.respond(embed=EMBED)
+    if TYPE.lower() in ['delete', 'remove', 'del']:
+      complete = []
+      errored = []
+      for channel in channels:
+        if channel.id not in channels:
+          errored.append({'channel': channel, 'error': 'Channel was never added'})
+        try:
+          channels.remove(channel.id)
+          complete.append({'channel': channel})
+        except:
+          errored.append({'channel': channel, 'error': 'Channel was never added'})
+      EMBED = discord.Embed(color=discord.Colour.brand_green(), description="\n".join(f"> {self.bot.sent_emoji} {r['channel'].mention}" for r in complete), title="🗑 Successfully removed channels")
+      if errored != []:
+        EMBED.add_field(name="Failed", value="\n".join(f"{r['channel'].mention} - {r['error']}" for r in errored))
+      return await ctx.respond(embed=EMBED)
+
   
 async def setup(bot):
   await bot.add_cog(AutoDelete(bot))
