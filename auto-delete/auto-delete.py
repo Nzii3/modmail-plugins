@@ -3,14 +3,19 @@ from core import checks
 from core.models import PermissionLevel
 from discord.ext import commands
 
-class TypeFlags(commands.FlagConverter, prefix="", delimiter=" "):
+class TypeFlags(commands.FlagConverter, prefix="?", delimiter=" "):
   type: str = commands.flag(aliases=['t'], default=None)
+
+class SetFlags(commands.FlagConverter, prefix="?", delimiter=" "):
+  set = None
 
 class AutoDelete(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
     self.db = bot.plugin_db.get_partition(self)
-    self.version = "1.0.3b"
+    self.version = "1.0.4b"
+
+  """A plugin for automatically deleting messages from members that leave"""
 
   def success(self, message: str) -> discord.Embed:
     embed = discord.Embed(color=self.bot.main_color, description=message)
@@ -41,7 +46,7 @@ class AutoDelete(commands.Cog):
     else:
       channels = "\n".join(f"• <#{c}>" for c in channels)
     limit = config['delete_limit']
-    embed = discord.Embed(color=discord.Colour.blurple(), description="These are the current configurations for **auto-delete**.")
+    embed = discord.Embed(color=self.bot.main_color, description="These are the current configurations for **auto-delete**.")
     embed.set_author(name=f"{ctx.guild.name} - Auto-delete", icon_url=ctx.guild.icon_url, url="https://github.com/Nzii3/modmail-plugins/tree/main/auto-delete")
     embed.add_field(name="Delete Limit", value=str(limit))
     embed.add_field(name="Auto-delete Channels", value=channels)
@@ -50,7 +55,10 @@ class AutoDelete(commands.Cog):
   
   @autodelete.command(name="limit", aliases=['messages'], help="Set the number of messages for the bot to search in each channel (less the better for bot latency)")
   @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
-  async def autodelete_limit(self, ctx, number):
+  async def autodelete_limit(self, ctx, *, flags: SetFlags):
+    if flags.set == None:
+      embed = discord.Embed(color=self.bot.main_color, description="")
+    number = flags.set
     if not number.isnumeric():
       return await ctx.send("Please send a valid integer (number)!")
     if int(number) > 500:
@@ -65,5 +73,5 @@ class AutoDelete(commands.Cog):
   async def autodelete_channels(self, ctx, channels: commands.Greedy[discord.TextChannel], *, flags: TypeFlags):
     return await ctx.send(embed=self.error('This command is still in development!'))
   
-def setup(bot):
-  bot.add_cog(AutoDelete(bot))
+async def setup(bot):
+  await bot.add_cog(AutoDelete(bot))
