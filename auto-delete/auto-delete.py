@@ -2,6 +2,7 @@ import discord
 from core import checks
 from core.models import PermissionLevel
 from discord.ext import commands
+from .utils import *
 
 class TypeFlags(commands.FlagConverter, prefix="?", delimiter=" "):
   type: str = commands.flag(aliases=['t'], default=None)
@@ -47,10 +48,10 @@ class AutoDelete(commands.Cog):
       channels = "\n".join(f"• <#{c}>" for c in channels)
     limit = config['delete_limit']
     embed = discord.Embed(color=self.bot.main_color, description="These are the current configurations for **auto-delete**.")
-    embed.set_author(name=f"{ctx.guild.name} - Auto-delete", icon_url=ctx.guild.icon_url, url="https://github.com/Nzii3/modmail-plugins/tree/main/auto-delete")
+    embed.set_author(name=f"{ctx.guild.name} - Auto-delete", icon_url=guild_icon(ctx.guild), url="https://github.com/Nzii3/modmail-plugins/tree/main/auto-delete")
     embed.add_field(name="Delete Limit", value=str(limit))
     embed.add_field(name="Auto-delete Channels", value=channels)
-    embed.set_footer(text=f"Auto-delete v{self.version} • Auto-delete by vNziie--#7777")
+    embed.set_footer(text=f"v{self.version} • Auto-delete by vNziie--#7777")
     await ctx.send(embed=embed)
   
   @autodelete.command(name="limit", aliases=['messages'], help="Set the number of messages for the bot to search in each channel (less the better for bot latency)")
