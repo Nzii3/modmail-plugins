@@ -65,5 +65,5 @@ class AutoDelete(commands.Cog):
   async def autodelete_channels(self, ctx, channels: commands.Greedy[discord.TextChannel], *, flags: TypeFlags):
     return await ctx.send(embed=self.error('This command is still in development!'))
   
-def setup(bot):
-  bot.add_cog(AutoDelete(bot))
+async def setup(bot):
+  await bot.add_cog(AutoDelete(bot))
