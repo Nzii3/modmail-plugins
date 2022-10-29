@@ -94,7 +94,6 @@ class AutoDelete(commands.Cog):
         complete.append({'channel': channel})
       desc = "\n".join(f"> ✅ {r['channel'].mention}" for r in complete)
       print(complete)
-      await ctx.send(desc)
       EMBED = discord.Embed(color=discord.Colour.brand_green(), description=desc, title=f"✅ Successfully added channels")
       if errored != []:
         EMBED.add_field(name="Failed", value="\n".join(f"❌ {r['channel'].mention} - {r['error']}" for r in errored))
