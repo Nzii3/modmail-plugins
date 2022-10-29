@@ -84,6 +84,7 @@ class AutoDelete(commands.Cog):
     channels = config['channels']
     TYPE = flags.type
     if TYPE.lower() == 'add':
+      print(channels)
       complete = []
       errored = []
       for channel in channels:
