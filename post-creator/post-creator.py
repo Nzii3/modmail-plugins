@@ -6,9 +6,6 @@ from discord import app_commands
 from discord.app_commands import Argument
 from .utils import *
 
-class PostFlags(commands.FlagConverter, prefix="?", delimiter=" "):
-  type: str = commands.flag(aliases=['t'], default=None)
-
 class PostCreator(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
