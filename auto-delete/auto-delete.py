@@ -92,7 +92,7 @@ class AutoDelete(commands.Cog):
         channels.append(channel.id)
         complete.append({'channel': channel})
       desc = "\n".join(f"> ✅ {r['channel'].mention}" for r in complete)
-      EMBED = discord.Embed(color=discord.Colour.brand_green(), description=, title=f"✅ Successfully added channels")
+      EMBED = discord.Embed(color=discord.Colour.brand_green(), description=desc, title=f"✅ Successfully added channels")
       if errored != []:
         EMBED.add_field(name="Failed", value="\n".join(f"❌ {r['channel'].mention} - {r['error']}" for r in errored))
       return await ctx.send(embed=EMBED)
