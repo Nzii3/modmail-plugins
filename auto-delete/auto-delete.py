@@ -91,9 +91,9 @@ class AutoDelete(commands.Cog):
           errored.append({'channel': channel, 'error': 'Channel is already added'})
         channels.append(channel.id)
         complete.append({'channel': channel})
-      EMBED = discord.Embed(color=discord.Colour.brand_green(), description="\n".join(f"> {self.bot.sent_emoji} {r['channel'].mention}" for r in complete), title=f"{self.bot.sent_emoji} Successfully added channels")
+      EMBED = discord.Embed(color=discord.Colour.brand_green(), description="\n".join(f"> ✅ {r['channel'].mention}" for r in complete), title=f"{self.bot.sent_emoji} Successfully added channels")
       if errored != []:
-        EMBED.add_field(name="Failed", value="\n".join(f"{r['channel'].mention} - {r['error']}" for r in errored))
+        EMBED.add_field(name="Failed", value="\n".join(f"❌ {r['channel'].mention} - {r['error']}" for r in errored))
       return await ctx.respond(embed=EMBED)
     if TYPE.lower() in ['delete', 'remove', 'del']:
       complete = []
@@ -106,9 +106,9 @@ class AutoDelete(commands.Cog):
           complete.append({'channel': channel})
         except:
           errored.append({'channel': channel, 'error': 'Channel was never added'})
-      EMBED = discord.Embed(color=discord.Colour.brand_green(), description="\n".join(f"> {self.bot.sent_emoji} {r['channel'].mention}" for r in complete), title="🗑 Successfully removed channels")
+      EMBED = discord.Embed(color=discord.Colour.brand_green(), description="\n".join(f"> ✅ {r['channel'].mention}" for r in complete), title="🗑 Successfully removed channels")
       if errored != []:
-        EMBED.add_field(name="Failed", value="\n".join(f"{r['channel'].mention} - {r['error']}" for r in errored))
+        EMBED.add_field(name="Failed", value="\n".join(f"❌ {r['channel'].mention} - {r['error']}" for r in errored))
       return await ctx.respond(embed=EMBED)
 
   
