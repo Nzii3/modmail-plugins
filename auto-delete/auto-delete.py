@@ -94,7 +94,7 @@ class AutoDelete(commands.Cog):
       EMBED = discord.Embed(color=discord.Colour.brand_green(), description="\n".join(f"> ✅ {r['channel'].mention}" for r in complete), title=f"✅ Successfully added channels")
       if errored != []:
         EMBED.add_field(name="Failed", value="\n".join(f"❌ {r['channel'].mention} - {r['error']}" for r in errored))
-      return await ctx.respond(embed=EMBED)
+      return await ctx.send(embed=EMBED)
     if TYPE.lower() in ['delete', 'remove', 'del']:
       complete = []
       errored = []
@@ -109,7 +109,7 @@ class AutoDelete(commands.Cog):
       EMBED = discord.Embed(color=discord.Colour.brand_green(), description="\n".join(f"> ✅ {r['channel'].mention}" for r in complete), title="🗑 Successfully removed channels")
       if errored != []:
         EMBED.add_field(name="Failed", value="\n".join(f"❌ {r['channel'].mention} - {r['error']}" for r in errored))
-      return await ctx.respond(embed=EMBED)
+      return await ctx.send(embed=EMBED)
 
   
 async def setup(bot):
