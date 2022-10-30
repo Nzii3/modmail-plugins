@@ -12,7 +12,7 @@ class PostCreator(commands.Cog):
     self.version = "1.0.0"
 
   @app_commands.command(name="forum-post", description="Create a forum post")
-  async def forum_post(self, interaction, title: str, message: str, channel: Argument(discord.AppCommandOptionType.channel, required=False)):
+  async def forum_post(self, interaction, title: str, message: str, channel: discord.TextChannel=None):
     await interaction.response.defer(ephemeral=True)
     channel: discord.ForumChannel = channel or interaction.channel
     await channel.create_thread(name=title, message=message)
