@@ -20,6 +20,6 @@ class PostCreator(commands.Cog):
 
 async def setup(bot):
   tree = bot.tree
-  forum_post = PostCreator().forum_post
+  forum_post = PostCreator(bot=bot).forum_post
   tree.add_command(forum_post, guild=discord.Object(id=841407843529523200))
   await bot.add_cog(PostCreator(bot))
