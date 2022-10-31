@@ -19,8 +19,7 @@ class PostCreator(commands.Cog):
     await interaction.followup.send(content=f'{self.bot.sent_emoji} Successfully created forum post!', ephemeral=True)
 
 async def setup(bot):
-  bot.tree = None
-  tree = app_commands.CommandTree(bot)
+  tree = bot.tree
   forum_post = PostCreator().forum_post
   tree.add_command(forum_post, guild=discord.Object(id=841407843529523200))
   bot.tree = tree
