@@ -11,7 +11,7 @@ class PostCreator(commands.Cog):
     self.bot = bot
     self.version = "1.0.0"
 
-  @app_commands.command(name="forum_post", description="Create a forum post", guild=discord.Object(id=841407843529523200))
+  @app_commands.command(name="forum_post", description="Create a forum post")
   async def forum_post(self, interaction, title: str, message: str, channel: discord.TextChannel=None):
     await interaction.response.defer(ephemeral=True)
     channel: discord.ForumChannel = channel or interaction.channel
@@ -21,5 +21,5 @@ class PostCreator(commands.Cog):
 async def setup(bot):
   tree = app_commands.CommandTree(bot)
   forum_post = PostCreator().forum_post
-  tree.add_command(forum_post)
+  tree.add_command(forum_post, guild=discord.Object(id=841407843529523200))
   await bot.add_cog(PostCreator(bot))
