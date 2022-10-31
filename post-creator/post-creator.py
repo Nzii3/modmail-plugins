@@ -11,7 +11,7 @@ class PostCreator(commands.Cog):
     self.bot = bot
     self.version = "1.0.0"
 
-  @app_commands.command(name="forum-post", description="Create a forum post")
+  @app_commands.command(name="forum_post", description="Create a forum post", guild=discord.Object(id=841407843529523200))
   async def forum_post(self, interaction, title: str, message: str, channel: discord.TextChannel=None):
     await interaction.response.defer(ephemeral=True)
     channel: discord.ForumChannel = channel or interaction.channel
@@ -19,4 +19,4 @@ class PostCreator(commands.Cog):
     await interaction.followup.send(content=f'{self.bot.sent_emoji} Successfully created forum post!', ephemeral=True)
 
 async def setup(bot):
-  await bot.add_cog(PostCreator(bot)) # guilds=[discord.Object(id=841407843529523200)]
+  await bot.add_cog(PostCreator(bot))
