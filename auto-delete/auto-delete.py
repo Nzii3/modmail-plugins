@@ -1,3 +1,4 @@
+# 3/3/2023: DON'T INSTALL YET
 import discord
 from core import checks
 from core.models import PermissionLevel
