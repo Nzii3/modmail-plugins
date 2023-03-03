@@ -37,5 +37,5 @@ class Raw(commands.Cog):
       return await ctx.send("There is no description in that embed!")
     await ctx.send(f"```\n{message.embeds[0].description}\n```")
 
-def setup(bot):
-    bot.add_cog(Raw(bot))
+async def setup(bot):
+    await bot.add_cog(Raw(bot))
