@@ -12,7 +12,7 @@ class Preview(commands.Cog):
   @checks.has_permissions(PermissionLevel.SUPPORTER)
   @commands.command(help="Preview a thread by ID or all")
   async def preview(self, ctx, thread_id=None):
-    data = await self.db.find_one({'_id': 'config'})
+    data = await self.db.find_one({'_id': 'threads'})
     print(data)
     await ctx.send(data)
     
