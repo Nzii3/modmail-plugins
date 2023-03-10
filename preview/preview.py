@@ -13,6 +13,7 @@ class Preview(commands.Cog):
   @commands.command(help="Preview a thread by ID or all")
   async def preview(self, ctx, thread_id=None):
     data = await self.db.find_one({'_id': 'config'})
+    print(data)
     await ctx.send(data)
     
 async def setup(bot):
