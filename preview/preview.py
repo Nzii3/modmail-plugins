@@ -15,7 +15,7 @@ class Preview(commands.Cog):
     thread_id = thread_id or ctx.guild.id
     data = await self.db.find_one({'thread_id': str(thread_id)})
     print(data)
-    await ctx.send(data)
+    await ctx.send(content=str(data))
     
 async def setup(bot):
   await bot.add_cog(Preview(bot))
